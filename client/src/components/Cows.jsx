@@ -3,7 +3,7 @@ import App from './App.jsx';
 
 
 const Cows = (props) => {
-  console.log(props);
+  //console.log(props);
   return props.cows.map((cow) => {
       //console.log(cow.name);
       var name = cow.cow_name;

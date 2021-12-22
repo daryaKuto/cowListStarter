@@ -12,7 +12,8 @@ class SearchForCow extends React.Component {
   onChange (e) {
     this.setState({ query: e.target.value });
   }
-  searchCow () {
+  searchCow (e) {
+    e.preventDefault();
     this.props.onSearch(this.state.query);
   }
 
@@ -22,7 +23,7 @@ class SearchForCow extends React.Component {
       <div>
         <label>Search for cows here!</label>
         <input id="cow-search" value={this.state.query} onChange={this.onChange.bind(this)} ></input>
-        <button onClick={this.searchCow}>Search</button>
+        <button onClick={this.searchCow.bind(this)}>Search</button>
       </div>
     )
   }

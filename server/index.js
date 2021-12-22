@@ -3,9 +3,9 @@ const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 })
-let db;
+const mysqldb = require('../database/mysql/index.js')
 
-const cowMongo = require('../database/mongo/index.js')
+//const cowMongo = require('../database/mongo/index.js')
 
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -24,21 +24,70 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/cows', (req, res) => {
   console.log('Hello from the other side!');
+  //--------MONGO----------
+
   //query from db
-  var results = cowMongo.find((err, results) => {
-    if (err) console.log(err);
-    else res.send(results);
+  // var results = cowMongo.find((err, results) => {
+  //   if (err) console.log(err);
+  //   else res.send(results);
+  // });
+
+  //--------MYSQL----------
+  var selectString = 'SELECT * FROM cows';
+  mysqldb.query(selectString, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(results);
+    }
   });
+
+
 });
 
+//get req for /searchforcow
+app.get('/searchforcow', (req, res) => {
+  var incomingCow = req.body.name;
+  console.log('incomingCow:', incomingCow);
+  var cowToLookFor = `SELECT * From cows where cow_name = "${incomingCow}";`
+  mysqldb.query(cowToLookFor, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(results);
+    }
+  });
+
+
+
+});
 
 app.post('/cows', (req, res) => {
+
+  //--------MONGO----------
+
+  // var addCow = { cow_name: req.body.name, cow_desc: req.body.desc };
+  // cowMongo.create(addCow, function (err, small) {
+  //   if (err) console.log(err);
+  //   console.log('saved!')
+  // });
+
+
+  //--------MYSQL----------
   console.log(req.body);
-  var addCow = { cow_name: req.body.name, cow_desc: req.body.desc };
-  cowMongo.create(addCow, function (err, small) {
-    if (err) console.log(err);
-    console.log('saved!')
+  var name = req.body.name;
+  var desc = req.body.desc;
+  var insertString = `INSERT INTO cows (cow_name, cow_desc) VALUES ("${name}", "${desc}");`
+  mysqldb.query(insertString, (err, results) => {
+    if (err) {
+      console.log(err);
+      //res.status(500).send('failed to post');
+    } else {
+      console.log('new cow posted');
+      res.send(results);
+    }
   });
+
 });
 
 
