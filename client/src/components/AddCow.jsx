@@ -7,8 +7,8 @@ class AddCow extends React.Component {
     super(props);
     this.state = {
       newCow: {
-        name: '',
-        desription: ''
+        cow_name: '',
+        cow_desc: ''
       }
     }
   }
@@ -16,10 +16,10 @@ class AddCow extends React.Component {
     //debugger;
     e.preventDefault();
     //console.log(this.state);
-    this.setState({newCow: { name: e.target.value , description: this.state.newCow.description}})
+    this.setState({newCow: { cow_name: e.target.value , cow_desc: this.state.newCow.cow_desc}})
   }
   onChangeDesc(e) {
-    this.setState({newCow: { name: this.state.newCow.name, description: e.target.value }});
+    this.setState({newCow: { cow_name: this.state.newCow.cow_name, cow_desc: e.target.value }});
   }
 
   addTo() {
@@ -32,8 +32,8 @@ class AddCow extends React.Component {
     return (
       <div className="add-bar">
         <label>Enter new cow </label>
-        <input id="cow-name" value={this.state.newCow.name} onChange={this.onChangeName.bind(this)} placeholder='type in name'></input>
-        <input id="cow-desc" value={this.state.newCow.description} required onChange={this.onChangeDesc.bind(this)} placeholder='type in description'></input>
+        <input id="cow-name" value={this.state.newCow.cow_name} onChange={this.onChangeName.bind(this)} placeholder='type in name'></input>
+        <input id="cow-desc" value={this.state.newCow.cow_desc} required onChange={this.onChangeDesc.bind(this)} placeholder='type in description'></input>
         <button onClick={this.addTo.bind(this)}>Add Cow</button>
       </div>
     )

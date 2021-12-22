@@ -1,5 +1,6 @@
 import React from 'react';
 import Cows from './Cows.jsx';
+import Cow from './Cow.jsx';
 import SearchForCow from './SearchForCow.jsx';
 import AddCow from './AddCow.jsx';
 import axios from 'axios';
@@ -10,15 +11,22 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // showDesc: false,
       cows: [
-        { "id": 1, "name": "Buttercup", "description": "a herbaceous plant with bright yellow cup-shaped flowers, common in grassland and as a garden weed. All kinds are poisonous and generally avoided by livestock" },
-        { 'id': 2, 'name': "Daisy", 'descdescription': "a small grassland plant that has flowers with a yellow disk and white rays. It has given rise to many ornamental garden varieties" }
+        { "id": 1, "cow_name": "Buttercup", "cow_desc": "a herbaceous plant with bright yellow cup-shaped flowers, common in grassland and as a garden weed. All kinds are poisonous and generally avoided by livestock" },
+        { 'id': 2, 'cow_name': "Daisy", 'cow_desc': "a small grassland plant that has flowers with a yellow disk and white rays. It has given rise to many ornamental garden varieties" }
       ]
     }
     this.handleAddCow = this.handleAddCow.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    //this.handleShowDescription = this.handleShowDescription.bind(this);
   }
 
+
+  // handleShowDescription() {
+  //   // will show cow descption on click, pass to Cows component
+  //   console.log(this.state.showDesc);
+  // }
 
 
   componentDidMount() {
@@ -35,7 +43,7 @@ class App extends React.Component {
 
   handleAddCow = (cowObj) => {
     //create new id for cow
-    var newCow = { 'name': cowObj.name, 'desc': cowObj.description };
+    var newCow = { 'name': cowObj.cow_name, 'desc': cowObj.cow_desc };
     //axios post request to db
     console.log(newCow);
     axios.post('/cows', newCow)
@@ -77,5 +85,5 @@ class App extends React.Component {
   }
 }
 
-
+//showDesc= {this.handleShowDescription}
 export default App;
